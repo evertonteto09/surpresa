@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Arquivo Confidencial — Caso #001</title>
+
+    <style>
+
+        /* =========================
+           CONFIGURAÇÕES GERAIS
+        ========================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            font-family: "Courier New", monospace;
+
+            background:
+                radial-gradient(circle at top, #252525, #0b0b0b 70%);
+
+            color: #e8e8e8;
+
+            display: flex;
+            justify-content: center;
+
+            padding: 40px 20px;
+        }
+
+
+        /* =========================
+           DOSSIÊ PRINCIPAL
+        ========================== */
+
+        .dossier {
+            width: 100%;
+            max-width: 850px;
+
+            background: #151515;
+
+            border: 1px solid #444;
+
+            box-shadow:
+                0 0 20px rgba(255,255,255,0.04),
+                0 0 80px rgba(0,0,0,0.8);
+
+            padding: 35px;
+
+            position: relative;
+        }
+
+
+        .dossier::before {
+            content: "";
+
+            position: absolute;
+
+            inset: 10px;
+
+            border: 1px dashed #333;
+
+            pointer-events: none;
+        }
+
+
+        /* =========================
+           CABEÇALHO
+        ========================== */
+
+        .header {
+            text-align: center;
+
+            border-bottom: 1px solid #444;
+
+            padding-bottom: 25px;
+
+            margin-bottom: 30px;
+        }
+
+
+        .classified {
+            display: inline-block;
+
+            color: #ff4d4d;
+
+            border: 2px solid #ff4d4d;
+
+            padding: 7px 14px;
+
+            font-weight: bold;
+
+            letter-spacing: 2px;
+
+            transform: rotate(-2deg);
+
+            margin-bottom: 20px;
+        }
+
+
+        h1 {
+            margin: 0;
+
+            font-size: clamp(1.8rem, 5vw, 3rem);
+
+            letter-spacing: 3px;
+
+            text-transform: uppercase;
+        }
+
+
+        .case-id {
+            margin-top: 12px;
+
+            color: #999;
+
+            font-size: 0.9rem;
+        }
+
+
+        /* =========================
+           SEÇÕES
+        ========================== */
+
+        .section {
+            margin-bottom: 35px;
+        }
+
+
+        .section-title {
+            color: #c9c9c9;
+
+            border-left: 4px solid #888;
+
+            padding-left: 12px;
+
+            font-size: 1.1rem;
+
+            font-weight: bold;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 15px;
+        }
+
+
+        p {
+            line-height: 1.7;
+
+            color: #c7c7c7;
+        }
+
+
+        .mystery-text {
+            background: #101010;
+
+            border: 1px solid #333;
+
+            padding: 20px;
+
+            color: #aaa;
+
+            line-height: 1.8;
+
+            position: relative;
+        }
+
+
+        .mystery-text::before {
+            content: "REGISTRO RECUPERADO";
+
+            position: absolute;
+
+            top: -11px;
+
+            left: 15px;
+
+            background: #151515;
+
+            padding: 0 8px;
+
+            color: #777;
+
+            font-size: 0.7rem;
+        }
+
+
+        /* =========================
+           EVIDÊNCIAS
+        ========================== */
+
+        .evidence-list {
+            display: grid;
+
+            gap: 15px;
+        }
+
+
+        .evidence {
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            padding: 18px;
+
+            background: #111;
+
+            border: 1px solid #333;
+
+            transition: 0.3s;
+        }
+
+
+        .evidence:hover {
+            border-color: #666;
+        }
+
+
+        .evidence-number {
+            width: 38px;
+            height: 38px;
+
+            border: 1px solid #555;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-weight: bold;
+
+            color: #999;
+        }
+
+
+        .evidence-content {
+            flex: 1;
+        }
+
+
+        .evidence-name {
+            color: #ddd;
+
+            font-weight: bold;
+
+            margin-bottom: 5px;
+        }
+
+
+        .evidence-status {
+            font-size: 0.8rem;
+
+            color: #777;
+        }
+
+
+        /* =========================
+           STATUS
+        ========================== */
+
+        .status-locked {
+            color: #c04b4b;
+        }
+
+
+        .status-unlocked {
+            color: #67d178;
+        }
+
+
+        /* =========================
+           BARRA DE PROGRESSO
+        ========================== */
+
+        .progress-container {
+            margin-top: 20px;
+        }
+
+
+        .progress-label {
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-bottom: 10px;
+
+            color: #888;
+
+            font-size: 0.8rem;
+        }
+
+
+        .progress-bar {
+            width: 100%;
+
+            height: 12px;
+
+            background: #080808;
+
+            border: 1px solid #333;
+
+            overflow: hidden;
+        }
+
+
+        .progress {
+            height: 100%;
+
+            width: 0%;
+
+            background: #888;
+
+            transition: width 0.8s ease;
+        }
+
+
+        /* =========================
+           ARQUIVO FINAL
+        ========================== */
+
+        .final-file {
+            margin-top: 50px;
+
+            padding: 35px 20px;
+
+            text-align: center;
+
+            background: #101010;
+
+            border: 1px solid #333;
+
+            position: relative;
+        }
+
+
+        .file-icon {
+            font-size: 4rem;
+
+            margin-bottom: 15px;
+
+            filter: grayscale(1);
+
+            transition: 0.5s;
+        }
+
+
+        .file-name {
+            font-size: 1.1rem;
+
+            color: #ccc;
+
+            margin-bottom: 8px;
+        }
+
+
+        .file-description {
+            color: #777;
+
+            font-size: 0.85rem;
+
+            margin-bottom: 20px;
+        }
+
+
+        /* =========================
+           CADEADO
+        ========================== */
+
+        .lock-message {
+            color: #c04b4b;
+
+            margin: 15px 0;
+
+            font-size: 0.9rem;
+        }
+
+
+        /* =========================
+           BOTÃO
+        ========================== */
+
+        .download-button {
+            display: inline-block;
+
+            padding: 13px 25px;
+
+            border: 1px solid #666;
+
+            background: #222;
+
+            color: #999;
+
+            text-decoration: none;
+
+            font-family: inherit;
+
+            font-weight: bold;
+
+            cursor: not-allowed;
+
+            opacity: 0.5;
+
+            pointer-events: none;
+
+            transition: 0.3s;
+        }
+
+
+        .download-button.unlocked {
+            background: #e6e6e6;
+
+            color: #111;
+
+            border-color: white;
+
+            cursor: pointer;
+
+            opacity: 1;
+
+            pointer-events: auto;
+        }
+
+
+        .download-button.unlocked:hover {
+            transform: scale(1.05);
+
+            background: white;
+        }
+
+
+        /* =========================
+           ARQUIVO DESBLOQUEADO
+        ========================== */
+
+        .final-file.unlocked {
+            border-color: #5e9f6a;
+
+            box-shadow: 0 0 25px rgba(94,159,106,0.1);
+        }
+
+
+        .final-file.unlocked .file-icon {
+            filter: grayscale(0);
+        }
+
+
+        /* =========================
+           RODAPÉ
+        ========================== */
+
+        .footer {
+            margin-top: 40px;
+
+            text-align: center;
+
+            color: #555;
+
+            font-size: 0.75rem;
+
+            border-top: 1px solid #333;
+
+            padding-top: 20px;
+        }
+
+
+        /* =========================
+           RESPONSIVIDADE
+        ========================== */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 15px;
+            }
+
+
+            .dossier {
+                padding: 25px 18px;
+            }
+
+
+            .evidence {
+                align-items: flex-start;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <main class="dossier">
+
+
+        <!-- =========================
+             CABEÇALHO
+        ========================== -->
+
+        <header class="header">
+
+            <div class="classified">
+                ARQUIVO CONFIDENCIAL
+            </div>
+
+            <h1>CASO #001</h1>
+
+            <div class="case-id">
+                STATUS DA INVESTIGAÇÃO: EM ANDAMENTO
+            </div>
+
+        </header>
+
+
+
+        <!-- =========================
+             INTRODUÇÃO
+        ========================== -->
+
+        <section class="section">
+
+            <div class="section-title">
+                Relatório da Investigação
+            </div>
+
+
+            <div class="mystery-text">
+
+                Uma longa ausência deixou o caso aparentemente
+                abandonado.
+
+                <br><br>
+
+                Entretanto, durante esse período, novas evidências
+                foram encontradas.
+
+                <br><br>
+
+                Três fragmentos permanecem espalhados em um local
+                conhecido pela investigadora.
+
+                <br><br>
+
+                O acesso ao arquivo final foi bloqueado.
+
+                <br><br>
+
+                Apenas a recuperação de todas as evidências poderá
+                restaurar o acesso.
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             INSTRUÇÕES
+        ========================== -->
+
+        <section class="section">
+
+            <div class="section-title">
+                Procedimento
+            </div>
+
+
+            <p>
+
+                As respostas não estão registradas neste documento.
+
+                <br><br>
+
+                Para encontrá-las, será necessário retornar ao local
+                onde a investigação começou.
+
+                <br><br>
+
+                <strong>Procure o investigador responsável.</strong>
+
+                <br><br>
+
+                Cada comando corretamente utilizado recuperará uma
+                nova evidência.
+
+            </p>
+
+
+            <div class="progress-container">
+
+                <div class="progress-label">
+
+                    <span>EVIDÊNCIAS RECUPERADAS</span>
+
+                    <span id="progressText">
+                        0 / 3
+                    </span>
+
+                </div>
+
+
+                <div class="progress-bar">
+
+                    <div
+                        class="progress"
+                        id="progressBar">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             EVIDÊNCIAS
+        ========================== -->
+
+        <section class="section">
+
+            <div class="section-title">
+                Registro de Evidências
+            </div>
+
+
+            <div class="evidence-list">
+
+
+                <!-- EVIDÊNCIA 01 -->
+
+                <div class="evidence">
+
+                    <div class="evidence-number">
+                        01
+                    </div>
+
+
+                    <div class="evidence-content">
+
+                        <div class="evidence-name">
+                            Evidência Desconhecida
+                        </div>
+
+
+                        <div
+                            class="evidence-status status-locked"
+                            id="status1">
+
+                            🔒 Não recuperada
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- EVIDÊNCIA 02 -->
+
+                <div class="evidence">
+
+                    <div class="evidence-number">
+                        02
+                    </div>
+
+
+                    <div class="evidence-content">
+
+                        <div class="evidence-name">
+                            Evidência Desconhecida
+                        </div>
+
+
+                        <div
+                            class="evidence-status status-locked"
+                            id="status2">
+
+                            🔒 Não recuperada
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- EVIDÊNCIA 03 -->
+
+                <div class="evidence">
+
+                    <div class="evidence-number">
+                        03
+                    </div>
+
+
+                    <div class="evidence-content">
+
+                        <div class="evidence-name">
+                            Evidência Desconhecida
+                        </div>
+
+
+                        <div
+                            class="evidence-status status-locked"
+                            id="status3">
+
+                            🔒 Não recuperada
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             ARQUIVO FINAL
+        ========================== -->
+
+        <section
+            class="final-file"
+            id="finalFile">
+
+
+            <div
+                class="file-icon"
+                id="fileIcon">
+
+                🔒
+
+            </div>
+
+
+            <div class="file-name">
+
+                ARQUIVO_FINAL.zip
+
+            </div>
+
+
+            <div class="file-description">
+
+                Conteúdo confidencial.
+                Acesso restrito.
+
+            </div>
+
+
+            <div
+                class="lock-message"
+                id="lockMessage">
+
+                🔐 O arquivo permanece bloqueado.
+
+                <br>
+
+                Recupere todas as evidências
+                para restaurar o acesso.
+
+            </div>
+
+
+            <!--
+                TROQUE O LINK ABAIXO
+                PELO CAMINHO DO SEU ZIP
+            -->
+
+            <a
+                href="ARQUIVO_FINAL.zip"
+                download
+                class="download-button"
+                id="downloadButton">
+
+                📦 DOWNLOAD BLOQUEADO
+
+            </a>
+
+
+        </section>
+
+
+
+        <!-- =========================
+             RODAPÉ
+        ========================== -->
+
+        <footer class="footer">
+
+            SISTEMA DE INVESTIGAÇÃO
+
+            <br>
+
+            CASO #001 — ACESSO RESTRITO
+
+        </footer>
+
+
+    </main>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+
+        /*
+        =====================================
+
+        SISTEMA DE EVIDÊNCIAS
+
+        Cada comando do bot deve enviar
+        a pessoa para:
+
+        ?evidence=1
+        ?evidence=2
+        ?evidence=3
+
+        Exemplo:
+
+        https://seusite.com/?evidence=1
+
+        =====================================
+        */
+
+
+        const params = new URLSearchParams(
+            window.location.search
+        );
+
+
+        const evidence = params.get("evidence");
+
+
+        /*
+        =====================================
+        REGISTRAR EVIDÊNCIA
+        =====================================
+        */
+
+
+        if (
+            evidence === "1" ||
+            evidence === "2" ||
+            evidence === "3"
+        ) {
+
+            localStorage.setItem(
+                "evidence_" + evidence,
+                "true"
+            );
+
+        }
+
+
+
+        /*
+        =====================================
+        VERIFICAR EVIDÊNCIAS
+        =====================================
+        */
+
+
+        const evidence1 =
+            localStorage.getItem(
+                "evidence_1"
+            ) === "true";
+
+
+        const evidence2 =
+            localStorage.getItem(
+                "evidence_2"
+            ) === "true";
+
+
+        const evidence3 =
+            localStorage.getItem(
+                "evidence_3"
+            ) === "true";
+
+
+
+        /*
+        =====================================
+        ATUALIZAR STATUS
+        =====================================
+        */
+
+
+        const status1 =
+            document.getElementById(
+                "status1"
+            );
+
+
+        const status2 =
+            document.getElementById(
+                "status2"
+            );
+
+
+        const status3 =
+            document.getElementById(
+                "status3"
+            );
+
+
+
+        if (evidence1) {
+
+            status1.innerHTML =
+                "✓ Evidência recuperada";
+
+            status1.className =
+                "evidence-status status-unlocked";
+
+        }
+
+
+
+        if (evidence2) {
+
+            status2.innerHTML =
+                "✓ Evidência recuperada";
+
+            status2.className =
+                "evidence-status status-unlocked";
+
+        }
+
+
+
+        if (evidence3) {
+
+            status3.innerHTML =
+                "✓ Evidência recuperada";
+
+            status3.className =
+                "evidence-status status-unlocked";
+
+        }
+
+
+
+        /*
+        =====================================
+        CONTADOR
+        =====================================
+        */
+
+
+        let total = 0;
+
+
+        if (evidence1) total++;
+        if (evidence2) total++;
+        if (evidence3) total++;
+
+
+
+        document.getElementById(
+            "progressText"
+        ).textContent =
+            total + " / 3";
+
+
+        document.getElementById(
+            "progressBar"
+        ).style.width =
+            (total / 3 * 100) + "%";
+
+
+
+        /*
+        =====================================
+        DESBLOQUEAR ARQUIVO
+        =====================================
+        */
+
+
+        if (total === 3) {
+
+
+            const finalFile =
+                document.getElementById(
+                    "finalFile"
+                );
+
+
+            const fileIcon =
+                document.getElementById(
+                    "fileIcon"
+                );
+
+
+            const lockMessage =
+                document.getElementById(
+                    "lockMessage"
+                );
+
+
+            const downloadButton =
+                document.getElementById(
+                    "downloadButton"
+                );
+
+
+            finalFile.classList.add(
+                "unlocked"
+            );
+
+
+            fileIcon.textContent =
+                "🔓";
+
+
+            lockMessage.innerHTML =
+
+                "✓ TODAS AS EVIDÊNCIAS FORAM RECUPERADAS."
+
+                +
+
+                "<br><br>"
+
+                +
+
+                "O arquivo confidencial foi liberado.";
+
+            
+            lockMessage.style.color =
+                "#67d178";
+
+
+            downloadButton.classList.add(
+                "unlocked"
+            );
+
+
+            downloadButton.textContent =
+                "📦 BAIXAR ARQUIVO";
+
+
+        }
+
+
+        /*
+        =====================================
+        REMOVER PARÂMETRO DA URL
+
+        Isso deixa a URL mais bonita depois
+        que a evidência foi registrada.
+        =====================================
+        */
+
+
+        if (evidence) {
+
+            window.history.replaceState(
+                {},
+                document.title,
+                window.location.pathname
+            );
+
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>
